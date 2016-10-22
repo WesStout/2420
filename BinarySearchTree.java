@@ -34,27 +34,57 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		BinarySearchTree<T> bst = new BinarySearchTree<T>(); //TODO generic..
 	}
 	
+	public boolean addHelper(Node<T> currentNode, Node<T> toBeInput) {
+    	int compareValue = ((T)toBeInput.data).compareTo((T) currentNode.data);
+    	if (compareValue == 0) {
+    		return false;
+    	}
+    	if (compareValue < 0) {
+    		if (currentNode.left == null) {
+    			currentNode.left = toBeInput;
+    			size++;
+    			return true;
+    		}
+			if (currentNode.left != null) {
+				addHelper(currentNode.left, toBeInput);
+			}
+    	}
+    	if (compareValue > 0) {
+    		if (currentNode.right == null) {
+    			currentNode.right = toBeInput;
+    			size++;
+    			return true;
+    		}
+			if (currentNode.right != null) {
+				addHelper(currentNode.right, toBeInput);
+			}
+    	}
+    	return false;
+    }
+    
+    
+    
 	@Override
 	public boolean add(Comparable item) {
-		if (item == null){
+		if (item == null) {
 			return false;
 		}
-		Node temp = new Node(item);
-		if (size() == 0){
-			root = temp;
-			temp.left = null;
-			temp.right = null;
-			size =1;
-			return true;
+		Node element = new Node(item);
+		if (size == 0) {
+			root = element;
+			element.left = null;
+			element.right = null;
+			size = 1;
 		}
-		Node currentNode = root;
+		else {
+			if (addHelper(root, element) == false) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
 		
-		if (((Comparable<? super T>) currentNode.value).compareTo(root.value)== 0){
-			return false;
-		}
-		else if (((Comparable<? super T>) currentNode.value).compareTo(root.value) > 0){
-			currentNode=currentNode.right;
-		}
 		return false;
 	}
 	
