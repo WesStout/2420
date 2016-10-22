@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import assignment06.DoublyLinkedList.Node;
+import lab08.BinarySearchNode;
 
 public class BinarySearchTree<T extends Comparable<? super T>> implements SortedSet<T> {
 
@@ -140,29 +141,48 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		return null;
 	}
 	
+	public Node<T> getLeftmostNode(Node<T> currentNode) {
+		if (currentNode.left == null) {
+			return currentNode.left;
+		}
+		return getLeftmostNode(currentNode.left);
+	}
+	
 	public boolean removeHelper(Node<T> currentNode, Node<T> toBeRemoved) {
     	int compareValue = ((T)toBeRemoved.data).compareTo((T) currentNode.data);
-    	if (compareValue == 0) {
-    		return false;
+    	if (compareValue == 0 && currentNode.left == null && currentNode.right == null) {
+    		currentNode = null;
+    		size--;
+    		return true;
     	}
-    	if (compareValue < 0) {
-    		if (currentNode.left == null) {
-    			currentNode.left = toBeRemoved;
-    			size++;
-    			return true;
+    	if (compareValue == 0 && currentNode.right.left == null) {
+    		currentNode.right.left = currentNode.left;
+    		currentNode = currentNode.right;
+    		size--;
+    		return true;
+    	}
+    	if (compareValue == 0 && currentNode.right.left != null) {
+    		Node<T> leftMostNode = getLeftmostNode(currentNode.right);
+    		if (leftMostNode.right != null) {
+    			currentNode.data = leftMostNode.data;
+    			leftMostNode = leftMostNode.right;
     		}
+    		else {
+    			currentNode.data = leftMostNode.data;
+    			leftMostNode = null;
+    		}
+    		size--;
+			return true;
+    	}
+    	
+    	if (compareValue < 0) {
 			if (currentNode.left != null) {
-				addHelper(currentNode.left, toBeRemoved);
+				removeHelper(currentNode.left, toBeRemoved);
 			}
     	}
     	if (compareValue > 0) {
-    		if (currentNode.right == null) {
-    			currentNode.right = toBeRemoved;
-    			size++;
-    			return true;
-    		}
 			if (currentNode.right != null) {
-				addHelper(currentNode.right, toBeRemoved);
+				removeHelper(currentNode.right, toBeRemoved);
 			}
     	}
     	return false;
@@ -174,10 +194,11 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			return false;
 		}
 		Node element = new Node(item);
-		if () {
-			
+		if (removeHelper(root, element) == false) {
+			return false;
 		}
-		return false;
+		return true;
+
 	}
 
 	@Override
@@ -199,3 +220,4 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 	
 }
+
