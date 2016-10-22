@@ -4,37 +4,36 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
+import assignment06.DoublyLinkedList.Node;
+
 public class BinarySearchTree<T extends Comparable<? super T>> implements SortedSet<T> {
-	public Node<T> root = null;
-	int size =0;
+
+	public Node root = null;
+	
+	private int size = 0;
+	
+	public BinarySearchTree() {
+		BinarySearchTree BST = new BinarySearchTree();
+		size = 0;
+	}
 	
 	/**
-	 * A classs for creating Nodes
-	 * @author Patrick Ekel
-	 * date: 10/5/16
+	 * Node class that allows for .data, .prev. and .next
 	 *
-	 * @param <T>
+	 * @param <E>
 	 */
-	public class Node<T> {
-		private Node<T> left;
-		private Node<T> right;
-		T value; 
-	/**
-	 * Constructor for the Nodes
-	 * @param value stored in the Node
-	 */
-		public Node(T value) {
-			this.value = value;
-			this.right=null;
-			this.left=null;
-		}
-	}
+    public class Node<T>{
+        private T data;
+        private Node left;
+        private Node right;
+        public Node(T data) {
+            this.data = data;
+        }
+        
+    }
 	
-	public BinarySearchTree(){
-		BinarySearchTree<T> bst = new BinarySearchTree<T>(); //TODO generic..
-	}
-	
-	public boolean addHelper(Node<T> currentNode, Node<T> toBeInput) {
+    
+    public boolean addHelper(Node<T> currentNode, Node<T> toBeInput) {
     	int compareValue = ((T)toBeInput.data).compareTo((T) currentNode.data);
     	if (compareValue == 0) {
     		return false;
@@ -87,77 +86,116 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		
 		return false;
 	}
-	
-//	public Node<T> add(Node<T> currentNode, T data){
-//		if (currentNode == null){
-//			return; 
-//		}
-//	}
 
 	@Override
 	public boolean addAll(Collection items) {
-		// TODO Auto-generated method stub
+	
 		return false;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		root = null;
+		size = 0;
 	}
 
 	@Override
 	public boolean contains(Comparable item) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean containsAll(Collection items) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
-	public Comparable first() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+	public T first() throws NoSuchElementException {
+		if (root != null) {
+			return (T) root;
+		}
+		else {
+			throw new NoSuchElementException();
+		}
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if (size == 0) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public Comparable last() throws NoSuchElementException {
-		// TODO Auto-generated method stub
+	public T last() throws NoSuchElementException {
+		if (root == null) {
+			throw new NoSuchElementException();
+		}
+		else {
+			
+		}
 		return null;
 	}
+	
+	public boolean removeHelper(Node<T> currentNode, Node<T> toBeRemoved) {
+    	int compareValue = ((T)toBeRemoved.data).compareTo((T) currentNode.data);
+    	if (compareValue == 0) {
+    		return false;
+    	}
+    	if (compareValue < 0) {
+    		if (currentNode.left == null) {
+    			currentNode.left = toBeRemoved;
+    			size++;
+    			return true;
+    		}
+			if (currentNode.left != null) {
+				addHelper(currentNode.left, toBeRemoved);
+			}
+    	}
+    	if (compareValue > 0) {
+    		if (currentNode.right == null) {
+    			currentNode.right = toBeRemoved;
+    			size++;
+    			return true;
+    		}
+			if (currentNode.right != null) {
+				addHelper(currentNode.right, toBeRemoved);
+			}
+    	}
+    	return false;
+    }
 
 	@Override
 	public boolean remove(Comparable item) {
-		// TODO Auto-generated method stub
+		if (item == null || size == 0) {
+			return false;
+		}
+		Node element = new Node(item);
+		if () {
+			
+		}
 		return false;
 	}
 
 	@Override
 	public boolean removeAll(Collection items) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public ArrayList toArrayList() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
+	
 }
