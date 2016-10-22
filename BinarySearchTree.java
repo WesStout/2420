@@ -114,11 +114,12 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 	@Override
 	public T first() throws NoSuchElementException {
-		if (root != null) {
-			return (T) root;
+		if (root == null) {
+			throw new NoSuchElementException();
 		}
 		else {
-			throw new NoSuchElementException();
+			Node<T> node =  getLeftMostNode(root);
+			return node.data;
 		}
 	}
 
@@ -136,16 +137,23 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			throw new NoSuchElementException();
 		}
 		else {
-			
+			Node<T> node =  getRightMostNode(root);
+			return node.data;
 		}
-		return null;
 	}
 	
-	public Node<T> getLeftmostNode(Node<T> currentNode) {
+	public Node<T> getLeftMostNode(Node<T> currentNode) {
 		if (currentNode.left == null) {
 			return currentNode.left;
 		}
-		return getLeftmostNode(currentNode.left);
+		return getLeftMostNode(currentNode.left);
+	}
+	
+	public Node<T> getRightMostNode(Node<T> currentNode) {
+		if (currentNode.right == null) {
+			return currentNode.right;
+		}
+		return getLeftMostNode(currentNode.right);
 	}
 	
 	public boolean removeHelper(Node<T> currentNode, Node<T> toBeRemoved) {
@@ -162,7 +170,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     		return true;
     	}
     	if (compareValue == 0 && currentNode.right.left != null) {
-    		Node<T> leftMostNode = getLeftmostNode(currentNode.right);
+    		Node<T> leftMostNode = getLeftMostNode(currentNode.right);
     		if (leftMostNode.right != null) {
     			currentNode.data = leftMostNode.data;
     			leftMostNode = leftMostNode.right;
@@ -220,4 +228,3 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 	
 }
-
