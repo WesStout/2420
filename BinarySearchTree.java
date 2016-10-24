@@ -22,7 +22,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 * @param <E>
 	 */
     public class Node<T>{
-        private T data;
+        public T data;
         private Node left;
         private Node right;
         public Node(T data) {
@@ -132,6 +132,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			size=1;
 		}
 		else{
+			element = new Node(items.iterator().next());
+
 			if (addAllHelper(items, root, element) == false){
 				return false;
 			}
@@ -193,16 +195,16 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	}
 	public Node<T> getLeftMostNode(Node<T> currentNode) {
 		if (currentNode.left == null) {
-			return currentNode.left;
+			return currentNode;
 		}
 		return getLeftMostNode(currentNode.left);
 	}
 	
 	public Node<T> getRightMostNode(Node<T> currentNode) {
 		if (currentNode.right == null) {
-			return currentNode.right;
+			return currentNode;
 		}
-		return getLeftMostNode(currentNode.right);
+		return getRightMostNode(currentNode.right);
 }
 	
 	
