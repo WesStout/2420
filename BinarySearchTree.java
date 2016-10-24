@@ -80,20 +80,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		return false;
 	}
 
-	// @Override
-	// public boolean addAll(Collection<? extends T> items) {
-	// int count = 0;
-	// if (items != null) {
-	// for (int i = 0; i < items.size(); i++) {
-	// this.add((Comparable)((ArrayList) items).get(i));
-	// count++;
-	// }
-	// if (count != 0) {
-	// return true;
-	// }
-	// }
-	// return false;
-	// }
 	@Override
 	public boolean addAll(Collection<? extends T> items) {
 		int count = 0;
@@ -101,7 +87,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			for ( T item : items) {
 				add(item);
 				count++;
-				// items.iterator().next();
 			}
 			if (count != 0) {
 				return true;
@@ -148,15 +133,21 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	}
 
 	@Override
-	public boolean containsAll(Collection items) {
-
-		return false;
+	public boolean containsAll(Collection<? extends T> items) {
+		if (items != null) {
+			for ( T item : items) {
+				if (contains(item) == false){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public T first() throws NoSuchElementException {
 		if (root != null) {
-			return (T) root.data;
+			return (T)root.data;
 		} else {
 			throw new NoSuchElementException();
 		}
@@ -246,9 +237,19 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	}
 
 	@Override
-	public boolean removeAll(Collection items) {
-
-		return false;
+	public boolean removeAll(Collection<? extends T> items) {
+		int count = 0;
+		if (items != null) {
+			for ( T item : items) {
+				if (remove(item)){
+					count++;
+				}
+			}
+		}
+		if (count != 0){
+			return true;
+		}
+		return true;
 	}
 
 	@Override
