@@ -87,61 +87,23 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	
 	
 	
-	public boolean addAllHelper(Collection items, Node<T> currentNode, Node<T> nodeToBeInput){
-    	int compareValue = ((T)currentNode.data).compareTo((T) nodeToBeInput.data);
-    	if (compareValue == 0){
-    		return false;
-    	}
-    	if (compareValue < 0){
-    		if (currentNode.right == null){
-    			currentNode.right = nodeToBeInput;
-    			size++;
-    			return true;
-    		}
-    		else{
-    		return addAllHelper(items, currentNode.right, nodeToBeInput);
-    		}
-    	}
-    	else {
-    		if (currentNode.left == null){
-    			currentNode.left=nodeToBeInput;
-    			size++;
-    			return true;
-    		}
-    		else{
-    			return addAllHelper(items, currentNode.left, nodeToBeInput);
-    		}
-    	}
-	}
-	
-	
-	
-	
-	
-	
 	@Override
 	public boolean addAll(Collection items) {
-		if (items == null){
-			return false;
-		}
-		Node<T> element = new Node(items.iterator().next());
-		if (isEmpty()){
-			root = element;
-			element.left=null;
-			element.right=null;
-			size=1;
-		}
-		else{
-			element = new Node(items.iterator().next());
-
-			if (addAllHelper(items, root, element) == false){
-				return false;
+		int count = 0;
+		if (items != null) {
+			T[] array = (T[]) items.toArray();
+			for (int elementsItem = 0; elementsItem < items.size(); elementsItem++) {
+				for (T eachElement : array) {
+					this.add(eachElement);
+					count++;
+				}
 			}
-			else{
+			if (count != 0) {
 				return true;
 			}
 		}
 		return false;
+		
 	}
 	
 	
