@@ -114,7 +114,7 @@ public class BinarySearchTreeTest {
 		assertEquals(true, bst.contains("india"));
 	}	
 	@Test
-	public void testContainsFalse() {
+	public void testContainsFalseLarge() {
 		bst = new BinarySearchTree();
 		bst.add("juliett");
 		bst.add("india");
@@ -123,7 +123,7 @@ public class BinarySearchTreeTest {
 		assertEquals(false, bst.contains("zebrah"));
 	}	
 	@Test
-	public void testContainsFalsep() {
+	public void testContainsFalseSmall() {
 		bst = new BinarySearchTree();
 		bst.add("juliett");
 		bst.add("india");
@@ -131,4 +131,38 @@ public class BinarySearchTreeTest {
 		bst.add("golf");
 		assertEquals(false, bst.contains("apple"));
 	}
+	@Test
+	public void testContainsAllTrue() {
+		bst = new BinarySearchTree();
+		bst.add("kilo");
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("echo");
+		ArrayList list = new ArrayList();
+		list.add("juliett");
+		list.add("india");
+		list.add("hotel");
+		list.add("golf");
+		assertEquals(true, bst.containsAll(list));
+	}
+	@Test
+	public void testContainsAllFalse() {
+		bst = new BinarySearchTree();
+		bst.add("kilo");
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("echo");
+		ArrayList list = new ArrayList();
+		list.add("juliett");
+		list.add("india");
+		list.add("pop");
+		list.add("hotel");
+		list.add("golf");
+		assertEquals(false, bst.containsAll(list));
+	}
+	
 }
