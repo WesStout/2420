@@ -109,12 +109,12 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		}
 		if (compareValue < 0) {
 			if (currentNode.left != null) {
-				containsHelper(currentNode.left, element);
+				return containsHelper(currentNode.left, element);
 			}
 		}
 		if (compareValue > 0) {
 			if (currentNode.right != null) {
-				containsHelper(currentNode.right, element);
+				return containsHelper(currentNode.right, element);
 			}
 		}
 		return false;
@@ -126,10 +126,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			return false;
 		}
 		Node element = new Node(item);
-		if (containsHelper(root, element) == false) {
-			return false;
+		if (containsHelper(root, element)) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override

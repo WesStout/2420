@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import assignment08.BinarySearchTree.Node;
 
 public class BinarySearchTreeTest {
 	BinarySearchTree<String> bst;
@@ -64,7 +63,6 @@ public class BinarySearchTreeTest {
 		bst.add("charlie");
 		bst.add("bravo");
 		bst.add("alpha");
-	//	bst.writeDot("dotTestt");
 		assertEquals(bst.getLeftMostNode(bst.root).data, "alpha");
 	}	
 	@Test
@@ -76,10 +74,61 @@ public class BinarySearchTreeTest {
 		list.add("hotel");
 		list.add("golf");
 		bst.addAll(list);
-		bst.writeDot("dotTestt");
 		assertEquals("golf", bst.getLeftMostNode(bst.root).data);
 	}	
+	@Test
+	public void testToArrayLast() {
+		bst = new BinarySearchTree();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("foxtrot");
+		ArrayList list = bst.toArrayList();
+		int size = list.size();
+		assertEquals("juliett", list.get(size-1));
+	}
 	
-	
-
+	@Test (expected = IndexOutOfBoundsException.class)
+	public void testToArrayFirstAndClear() {
+		bst = new BinarySearchTree();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("foxtrot");
+		ArrayList list = bst.toArrayList();
+		assertEquals("foxtrot", list.get(0));
+		bst.clear();
+		assertTrue(bst.size()==0);
+		ArrayList eList = bst.toArrayList();
+		assertEquals("", eList.get(0));
+	}
+	@Test
+	public void testContainsTrue() {
+		bst = new BinarySearchTree();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		assertEquals(true, bst.contains("india"));
+	}	
+	@Test
+	public void testContainsFalse() {
+		bst = new BinarySearchTree();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		assertEquals(false, bst.contains("zebrah"));
+	}	
+	@Test
+	public void testContainsFalsep() {
+		bst = new BinarySearchTree();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		assertEquals(false, bst.contains("apple"));
+	}
 }
