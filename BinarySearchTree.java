@@ -153,10 +153,35 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		size = 0;
 	}
 
+	public boolean containsHelper(Node<T> currentNode, Node<T> element) {
+    		int compareValue = ((T)element.data).compareTo((T) currentNode.data);
+    		if (compareValue == 0) {
+    			return true;
+    		}
+    		if (compareValue < 0) {
+			if (currentNode.left != null) {
+				containsHelper(currentNode.left, element);
+			}
+    		}
+    		if (compareValue > 0) {
+			if (currentNode.right != null) {
+				containsHelper(currentNode.right, element);
+			}
+    		}
+    		return false;
+    	}
+	
+	
 	@Override
 	public boolean contains(Comparable item) {
-		
-		return false;
+		if (item == null || size == 0) {
+			return false;
+		}
+		Node element = new Node(item);
+		if (containsHelper(root, element) == false) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
