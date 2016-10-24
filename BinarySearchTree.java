@@ -1,133 +1,325 @@
 package assignment08;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
 public class BinarySearchTree<T extends Comparable<? super T>> implements SortedSet<T> {
-	public Node<T> root = null;
-	int size =0;
+
+	public Node root = null;
+	
+	private int size = 0;
+	
+	public BinarySearchTree() {
+		size = 0;
+	}
 	
 	/**
-	 * A classs for creating Nodes
-	 * @author Patrick Ekel
-	 * date: 10/5/16
+	 * Node class that allows for .data, .prev. and .next
 	 *
-	 * @param <T>
+	 * @param <E>
 	 */
-	public class Node<T> {
-		private Node<T> left;
-		private Node<T> right;
-		T value; 
-	/**
-	 * Constructor for the Nodes
-	 * @param value stored in the Node
-	 */
-		public Node(T value) {
-			this.value = value;
-			this.right=null;
-			this.left=null;
-		}
-	}
+    public class Node<T>{
+        private T data;
+        private Node left;
+        private Node right;
+        public Node(T data) {
+            this.data = data;
+        }
+    }
 	
-	public BinarySearchTree(){
-		BinarySearchTree<T> bst = new BinarySearchTree<T>(); //TODO generic..
-	}
-	
+    
+    public boolean addHelper(Node<T> currentNode, Node<T> toBeInput) {
+    	int compareValue = ((T)toBeInput.data).compareTo((T) currentNode.data);
+    	if (compareValue == 0) {
+    		return false;
+    	}
+    	if (compareValue < 0) {
+    		if (currentNode.left == null) {
+    			currentNode.left = toBeInput;
+    			size++;
+    			return true;
+    		}
+			if (currentNode.left != null) {
+				addHelper(currentNode.left, toBeInput);
+			}
+    	}
+    	if (compareValue > 0) {
+    		if (currentNode.right == null) {
+    			currentNode.right = toBeInput;
+    			size++;
+    			return true;
+    		}
+			if (currentNode.right != null) {
+				addHelper(currentNode.right, toBeInput);
+			}
+    	}
+    	return false;
+    }
+    
+    
+    
 	@Override
 	public boolean add(Comparable item) {
-		if (item == null){
+		if (item == null) {
 			return false;
 		}
-		Node temp = new Node(item);
-		if (size() == 0){
-			root = temp;
-			temp.left = null;
-			temp.right = null;
-			size =1;
-			return true;
+		Node element = new Node(item);
+		if (size == 0) {
+			root = element;
+			element.left = null;
+			element.right = null;
+			size = 1;
 		}
-		Node currentNode = root;
-		
-		if (((Comparable<? super T>) currentNode.value).compareTo(root.value)== 0){
-			return false;
-		}
-		else if (((Comparable<? super T>) currentNode.value).compareTo(root.value) > 0){
-			currentNode=currentNode.right;
+		else {
+			if (addHelper(root, element) == false) {
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
 		return false;
 	}
 	
-//	public Node<T> add(Node<T> currentNode, T data){
-//		if (currentNode == null){
-//			return; 
-//		}
-//	}
-
+	
+	
+	
+	public boolean addAllHelper(Collection items, Node<T> currentNode, Node<T> nodeToBeInput){
+    	int compareValue = ((T)currentNode.data).compareTo((T) nodeToBeInput.data);
+    	if (compareValue == 0){
+    		return false;
+    	}
+    	if (compareValue < 0){
+    		if (currentNode.right == null){
+    			currentNode.right = nodeToBeInput;
+    			size++;
+    			return true;
+    		}
+    		else{
+    		return addAllHelper(items, currentNode.right, nodeToBeInput);
+    		}
+    	}
+    	else {
+    		if (currentNode.left == null){
+    			currentNode.left=nodeToBeInput;
+    			size++;
+    			return true;
+    		}
+    		else{
+    			return addAllHelper(items, currentNode.left, nodeToBeInput);
+    		}
+    	}
+	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public boolean addAll(Collection items) {
-		// TODO Auto-generated method stub
+		if (items == null){
+			return false;
+		}
+		Node<T> element = new Node(items.iterator().next());
+		if (isEmpty()){
+			root = element;
+			element.left=null;
+			element.right=null;
+			size=1;
+		}
+		else{
+			if (addAllHelper(items, root, element) == false){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
 		return false;
 	}
+	
+	
+	
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		root = null;
+		size = 0;
 	}
 
 	@Override
 	public boolean contains(Comparable item) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean containsAll(Collection items) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
-	public Comparable first() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+	public T first() throws NoSuchElementException {
+		if (root != null) {
+			return (T) root.data;
+		}
+		else {
+			throw new NoSuchElementException();
+		}
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if (size == 0) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public Comparable last() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+	public T last() throws NoSuchElementException {
+		if (root == null) {
+			throw new NoSuchElementException();
+		}
+		else {
+			return getRightMostNode(root).data;
+		}
+//		return null;
 	}
+	public Node<T> getLeftMostNode(Node<T> currentNode) {
+		if (currentNode.left == null) {
+			return currentNode.left;
+		}
+		return getLeftMostNode(currentNode.left);
+	}
+	
+	public Node<T> getRightMostNode(Node<T> currentNode) {
+		if (currentNode.right == null) {
+			return currentNode.right;
+		}
+		return getLeftMostNode(currentNode.right);
+}
+	
+	
+	public boolean removeHelper(Node<T> currentNode, Node<T> toBeRemoved) {
+    	int compareValue = ((T)toBeRemoved.data).compareTo((T) currentNode.data);
+    	if (compareValue == 0 && currentNode.left == null && currentNode.right == null) {
+    		currentNode = null;
+    		size--;
+    		return true;
+    	}
+    	if (compareValue == 0 && currentNode.right.left == null) {
+    		currentNode.right.left = currentNode.left;
+    		currentNode = currentNode.right;
+    		size--;
+    		return true;
+    	}
+    	if (compareValue == 0 && currentNode.right.left != null) {
+    		Node<T> leftMostNode = getLeftMostNode(currentNode.right);
+    		if (leftMostNode.right != null) {
+    			currentNode.data = leftMostNode.data;
+    			leftMostNode = leftMostNode.right;
+    		}
+    		else {
+    			currentNode.data = leftMostNode.data;
+    			leftMostNode = null;
+    		}
+    		size--;
+			return true;
+    	}
+    	
+    	if (compareValue < 0) {
+			if (currentNode.left != null) {
+				removeHelper(currentNode.left, toBeRemoved);
+			}
+    	}
+    	if (compareValue > 0) {
+			if (currentNode.right != null) {
+				removeHelper(currentNode.right, toBeRemoved);
+			}
+    	}
+    	return false;
+}
 
 	@Override
 	public boolean remove(Comparable item) {
-		// TODO Auto-generated method stub
-		return false;
+		if (item == null || size == 0) {
+			return false;
+		}
+		Node element = new Node(item);
+		if (removeHelper(root, element) == false) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean removeAll(Collection items) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public ArrayList toArrayList() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<T> array = new ArrayList<T>();
+		toArrayListHelper(root, array);
+		return array;
 	}
+	public void toArrayListHelper(Node node, ArrayList<T> array){
+		if (node == null){
+			return;
+		}
+		toArrayListHelper(node.left, array);
+		array.add((T) node.data);
+		toArrayListHelper(node.right, array);
+	}
+	
+	
+	public void writeDot(String filename) 
+	    { 
+	        try { 
+	            // PrintWriter(FileWriter) will write output to a file 
+	            PrintWriter output = new PrintWriter(new FileWriter(filename)); 
+	            // Set up the dot graph and properties 
+	            output.println("digraph BST {"); 
+	            output.println("node [shape=record]"); 
+	            if(root != null) 
+	                writeDotRecursive(root, output); 
+	            // Close the graph 
+	            output.println("}"); 
+	            output.close(); 
+	        } 
+	        catch(Exception e){e.printStackTrace();} 
+	    } 
+	    // Recursive method for writing the tree to  a dot file 
+	    private void writeDotRecursive(Node n, PrintWriter output) throws Exception 
+	    { 
+	        output.println(n.data + "[label=\"<L> |<D> " + n.data + "|<R> \"]"); 
+	        if(n.left != null) 
+	        { 
+	            // write the left subtree 
+	            writeDotRecursive(n.left, output); 
+	            // then make a link between n and the left subtree 
+	            output.println(n.data + ":L -> " + n.left.data + ":D" ); 
+	        } 
+	        if(n.right != null) 
+	        { 
+	            // write the left subtree 
+	            writeDotRecursive(n.right, output); 
+	            // then make a link between n and the right subtree 
+	            output.println(n.data + ":R -> " + n.right.data + ":D" ); 
+	        } 
+	    } 
 
+	
 }
