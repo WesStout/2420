@@ -2,28 +2,19 @@ package assignment08;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * This is a test class for the BinarySearchTree class
+ * @author Patrick Ekel and Will Stout
+ *
+ */
 public class BinarySearchTreeTest {
 	BinarySearchTree<String> bst;
-	SpellChecker sc;
 
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -261,26 +252,6 @@ public class BinarySearchTreeTest {
 		bst.remove("bravo");
 		bst.remove("c");
 		bst.writeDot("dotTesttTestt");
-
-	}
-	@Test
-	public void testSmellerChckerSpellCheckFile() {
-		ArrayList<String> shortDictionary = new ArrayList<String>();
-		shortDictionary.add("the");
-		shortDictionary.add("man");
-		shortDictionary.add("enjoys");
-		shortDictionary.add("taking");
-		shortDictionary.add("long");
-		shortDictionary.add("walks");
-		sc = new SpellChecker(shortDictionary);
-		File file = new File("C:/Utah/Fall16/2420/assignment07/shortFile.txt");
-	//	List<String> res = sc.spellCheck(file);
-		System.out.println(sc.spellCheck(file).toString());
-		List<String> t = new ArrayList<String>();
-		t.add("dude");
-		t.add("hates");//TODO order matters hereee
-		t.add("runs");//TODO also, ARRAYLIST in spellCheck
-		assertEquals(t, sc.spellCheck(file));
 	}
 
 }

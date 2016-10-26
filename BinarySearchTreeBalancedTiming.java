@@ -1,23 +1,27 @@
 package assignment08;
 
-import java.awt.List;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
-
+import java.util.TreeSet;
 import lab05.Charter;
 
+
 /**
- * This is a timing class for a tree with elements that are inserted randomly vs in order
- * @author Patrick Ekel
+ * This is a timing class for a auto balancing tree and a non auto balancing tree
+ * @author Patrick Ekel and Will Stout
  *
  */
-public class BinarySearchTreeTiming {
+public class BinarySearchTreeBalancedTiming {
 
+	
+		/**
+		 * This class times methods of the LinkedListStack class
+		 * @author Patrick Ekel
+		 *
+		 */
 			static final int ITER_COUNT = 20;
 
 			public static void main(String[] args) {
@@ -33,8 +37,8 @@ public class BinarySearchTreeTiming {
 						int size = ((int) Math.pow(2, exp)/2); 
 					//	int size = ((int) exp*2); 
 
-						BinarySearchTree<Integer> sortedTree = new BinarySearchTree<Integer>();
-						BinarySearchTree<Integer> unsortedTree = new BinarySearchTree<Integer>();						
+						BinarySearchTree<Integer> myTree = new BinarySearchTree<Integer>();
+						TreeSet<Integer> javaTree = new TreeSet<Integer>();						
 						
 							
 						// Do the experiment multiple times, and average out the results
@@ -46,22 +50,23 @@ public class BinarySearchTreeTiming {
 							ArrayList<Integer> sortedList = new ArrayList<Integer>();
 							ArrayList<Integer> unsortedList = new ArrayList<Integer>();
 							for (int i =10; i <= size; i+=10){
-								sortedList.add(i);
 								unsortedList.add(i);
 								Collections.shuffle(unsortedList);
 									}
 
 							
-							sortedTree.addAll(sortedList);
-					//		sortedTree.addAll(unsortedList);
+				
+							javaTree.addAll(unsortedList);
+							myTree.addAll(unsortedList);
+
 
 							
 							// TIME IT!
 							long start = System.nanoTime();
 							
 							for (int i =10; i <=size; i+=10){
-							   sortedTree.contains(i);
-						//		unsortedTree.contains(i);
+							   javaTree.contains(i);
+						//		myTree.contains(i);
 
 							}
 
@@ -84,9 +89,3 @@ public class BinarySearchTreeTiming {
 
 			}
 		}
-
-		
-
-
-	
-
