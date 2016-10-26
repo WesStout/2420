@@ -1,10 +1,12 @@
 package assignment08;
 
+import java.awt.List;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 import lab05.Charter;
@@ -17,7 +19,7 @@ public class BinarySearchTreeTiming {
 		 * @author Patrick Ekel
 		 *
 		 */
-			static final int ITER_COUNT = 1000;
+			static final int ITER_COUNT = 20;
 
 			public static void main(String[] args) {
 
@@ -26,40 +28,43 @@ public class BinarySearchTreeTiming {
 
 				try (FileWriter fw = new FileWriter(new File("contains.tsv"))) { 
 
-					for (int exp = 10; exp <= 25; exp++) {
+					
+					for (int exp = 10; exp <= 18; exp++) {
 																											
-						int size = (int) Math.pow(2, exp); 
-						BinarySearchTree<String> test = new BinarySearchTree<String>();
-						char [] charPool = "abcdefghijklmnopqrs".toCharArray();
-						StringBuilder builder = new StringBuilder();
-						Random random = new Random();
-						for ( int i = 0; i < 10; i++){
-							char ch = charPool[random.nextInt(charPool.length)];
-							builder.append(ch);
-						}
-						String print = builder.toString();
-						char[] sortIt = print.toCharArray();
-						Arrays.sort(sortIt);
-						String sortPrint = String.valueOf(sortIt);
+						int size = ((int) Math.pow(2, exp)/2); 
+					//	int size = ((int) exp*2); 
 
-						ArrayList<String> t = new ArrayList<String>();
-				//		t.add(print);
-						t.add(sortPrint);
-
-						//test.add(print);
-		//				test.add(sortPrint);
-				//		test.writeDot("dotTime");
+						BinarySearchTree<Integer> sortedTree = new BinarySearchTree<Integer>();
+						BinarySearchTree<Integer> unsortedTree = new BinarySearchTree<Integer>();						
+						
 							
 						// Do the experiment multiple times, and average out the results
 						long totalTime = 0;
 						
+						
 						for (int iter = 0; iter < ITER_COUNT; iter++) {
-							test.addAll(t);
+
+							ArrayList<Integer> sortedList = new ArrayList<Integer>();
+							ArrayList<Integer> unsortedList = new ArrayList<Integer>();
+							for (int i =10; i <= size; i+=10){
+								sortedList.add(i);
+								unsortedList.add(i);
+								Collections.shuffle(unsortedList);
+									}
+
+							
+							sortedTree.addAll(sortedList);
+				//			sortedTree.addAll(unsortedList);
+
+							
 							// TIME IT!
 							long start = System.nanoTime();
 							
-						//	test.contains("ZZZ");
-							t.contains("ZZZ");
+							for (int i =10; i <=size; i+=10){
+							   sortedTree.contains(i);
+						//		unsortedTree.contains(i);
+
+							}
 
 							long stop = System.nanoTime();
 							totalTime += stop - start;

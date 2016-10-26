@@ -77,11 +77,11 @@ public class SpellChecker {
 
 		List<String> wordsToCheck = readFromFile(documentFile);
 
-		List<String> misSpelledWords = null;
+		List<String> misSpelledWords= new ArrayList<String>(); //TODO ARRAYLIST RIGHT HERE
 		
 		if (wordsToCheck != null) {
 			for ( String item : wordsToCheck) {
-				if (dictionary.contains(item) == false){
+				if (dictionary.contains(item)==false){
 					misSpelledWords.add(item);
 				}
 			}
@@ -138,7 +138,7 @@ public class SpellChecker {
 			System.err.println("File " + file + " cannot be found.");
 		}
 
-		System.out.println("Document is " + words);
+	//	System.out.println("Document is " + words);
 
 		return words;
 	}

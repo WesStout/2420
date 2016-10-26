@@ -2,7 +2,9 @@ package assignment08;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +14,8 @@ import org.junit.Test;
 
 public class BinarySearchTreeTest {
 	BinarySearchTree<String> bst;
+	SpellChecker sc;
+
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -239,4 +243,44 @@ public class BinarySearchTreeTest {
 		bst.add("alpha");
 		assertEquals(true, bst.remove("bravo"));
 	}
+	
+	@Test
+	public void testRemoveSingTrue() {
+		bst = new BinarySearchTree<String>();
+		bst.add("juliett");
+		bst.add("india"); //TODO assert something
+		bst.add("bravo");
+		bst.add("bravo");
+		bst.add("alpha");
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("gr");
+		bst.add("s");
+		bst.add("t");
+		bst.add("z");
+		bst.remove("bravo");
+		bst.remove("c");
+		bst.writeDot("dotTesttTestt");
+
+	}
+	@Test
+	public void testSmellerChckerSpellCheckFile() {
+		ArrayList<String> shortDictionary = new ArrayList<String>();
+		shortDictionary.add("the");
+		shortDictionary.add("man");
+		shortDictionary.add("enjoys");
+		shortDictionary.add("taking");
+		shortDictionary.add("long");
+		shortDictionary.add("walks");
+		sc = new SpellChecker(shortDictionary);
+		File file = new File("C:/Utah/Fall16/2420/assignment07/shortFile.txt");
+	//	List<String> res = sc.spellCheck(file);
+		System.out.println(sc.spellCheck(file).toString());
+		List<String> t = new ArrayList<String>();
+		t.add("dude");
+		t.add("hates");//TODO order matters hereee
+		t.add("runs");//TODO also, ARRAYLIST in spellCheck
+		assertEquals(t, sc.spellCheck(file));
+	}
+
 }
