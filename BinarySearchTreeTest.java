@@ -280,5 +280,116 @@ public class BinarySearchTreeTest {
 
 
 	}
-
+@Test 
+	public void testRemoveAll() {
+		bst = new BinarySearchTree<String>();
+		bst.add("kilo");
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("echo");
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("juliett");
+		list.add("india");
+		list.add("hotel");
+		list.add("golf");
+		list.add("echo");
+		bst.removeAll(list);
+		assertTrue(bst.size() == 1);
+		list.add("kilo");
+		bst.removeAll(list);
+		assertTrue(bst.size() == 0);
+		list.add("shoes");
+		bst.removeAll(list);
+		assertTrue(bst.size() == 0);
+	}
+	
+	
+	@Test
+	public void testClear() {
+		bst = new BinarySearchTree<String>();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("foxtrot");
+		bst.clear();
+		assertEquals(bst.size(), 0);
+		bst.add("hoop");
+		bst.remove("orange");
+		bst.clear();
+		assertEquals(bst.size(), 0);
+	}
+	
+	@Test
+	public void testFirst() {
+		bst = new BinarySearchTree<String>();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("foxtrot");
+		assertTrue(bst.first() == "foxtrot");
+		bst.add("hoop");
+		bst.remove("orange");
+		assertFalse(bst.first() == "hoop");
+		bst.add("add");
+		assertTrue(bst.first() == "add");
+	}
+	
+	@Test
+	public void testLast() {
+		bst = new BinarySearchTree<String>();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("foxtrot");
+		assertTrue(bst.last() == "juliett");
+		bst.add("hoop");
+		bst.remove("orange");
+		assertFalse(bst.last() == "hoop");
+		bst.add("zadd");
+		assertTrue(bst.last() == "zadd");
+	}
+	
+	@Test
+	public void testSize() {
+		bst = new BinarySearchTree<String>();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("foxtrot");
+		assertTrue(bst.size() == 5);
+		bst.add("hoop");
+		bst.remove("orange");
+		assertTrue(bst.size() == 6);
+		bst.clear();
+		assertTrue(bst.size() == 0);
+	}
+	
+	@Test
+	public void testIsEmpty() {
+		bst = new BinarySearchTree<String>();
+		bst.add("juliett");
+		bst.add("india");
+		bst.add("hotel");
+		bst.add("golf");
+		bst.add("foxtrot");
+		assertTrue(bst.isEmpty() == false);
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("juliett");
+		list.add("india");
+		bst.removeAll(list);
+		assertTrue(bst.isEmpty() == false);
+		list.add("juliett");
+		list.add("india");
+		list.add("hotel");
+		list.add("golf");
+		list.add("foxtrot");
+		bst.removeAll(list);
+		assertTrue(bst.isEmpty() == true);
+	}
 }
