@@ -296,7 +296,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		}
 		wasRemoved =true;
 		size--;
-		return removeHelper(root, item) != null;
+		root = removeHelper(root, item);
+		return true;
 		
 	}
 	/**

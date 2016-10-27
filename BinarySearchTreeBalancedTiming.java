@@ -52,23 +52,27 @@ public class BinarySearchTreeBalancedTiming {
 							for (int i =10; i <= size; i+=10){
 								unsortedList.add(i);
 								Collections.shuffle(unsortedList);
-									}
-
-							
-				
-							javaTree.addAll(unsortedList);
-							myTree.addAll(unsortedList);
+							}
+											
+			//				javaTree.addAll(unsortedList);
+			//				myTree.addAll(unsortedList);
 
 
 							
 							// TIME IT!
 							long start = System.nanoTime();
-							
-							for (int i =10; i <=size; i+=10){
-							   javaTree.contains(i);
-						//		myTree.contains(i);
+							javaTree.addAll(unsortedList);
+						//	myTree.addAll(unsortedList);
 
-							}
+
+							//for (int i =10; i <=size; i+=10){
+							 //  javaTree.contains(i);
+							//	myTree.contains(i);
+								//Collections.shuffle(unsortedList);								
+							//	javaTree.add(unsortedList.get(i));
+				//				myTree.addAll(unsortedList);
+
+							//}
 
 							long stop = System.nanoTime();
 							totalTime += stop - start;

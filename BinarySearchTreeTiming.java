@@ -40,20 +40,24 @@ public class BinarySearchTreeTiming {
 								unsortedList.add(i);
 								Collections.shuffle(unsortedList);
 									}
-							sortedTree.addAll(sortedList);
+//							sortedTree.addAll(sortedList);
 					//		sortedTree.addAll(unsortedList);
 
 							// TIME IT!
 							long start = System.nanoTime();
-							
-							for (int i =10; i <=size; i+=10){
-							   sortedTree.contains(i);
+						//	sortedTree.addAll(sortedList);
+							unsortedTree.addAll(unsortedList);
+
+						//	for (int i =10; i <=size; i+=10){
+						//	   sortedTree.contains(i);
 						//		unsortedTree.contains(i);
-							}
+						//	}
 							long stop = System.nanoTime();
 							totalTime += stop - start;
 						}
 						double averageTime = totalTime / (double) ITER_COUNT;
+						//double averageTime2 = totalTime2 / (double) ITER_COUNT;
+
 						System.out.println(size + "\t" + averageTime); // print to console										
 						fw.write(size + "\t" + averageTime + "\n"); // write to file.
 					//	test.writeDot("dotTime");

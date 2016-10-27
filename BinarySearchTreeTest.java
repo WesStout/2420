@@ -239,7 +239,7 @@ public class BinarySearchTreeTest {
 	public void testRemoveSingTrue() {
 		bst = new BinarySearchTree<String>();
 		bst.add("juliett");
-		bst.add("india"); //TODO assert something
+		bst.add("india");
 		bst.add("bravo");
 		bst.add("bravo");
 		bst.add("alpha");
@@ -251,7 +251,34 @@ public class BinarySearchTreeTest {
 		bst.add("z");
 		bst.remove("bravo");
 		bst.remove("c");
+	}
+	
+	@Test
+	public void testRemoveSingRootTrue() {
+		bst = new BinarySearchTree<String>();
+		bst.add("juliett");
+		bst.add("india");
+		assertEquals(2, bst.size());
+		bst.remove("india");
+		assertEquals(1, bst.size());
+		bst.remove("juliett");
+		assertEquals(0, bst.size());
+		bst.add("alpha");
+		bst.add("bravo");
+		bst.add("charlie");
+		bst.add("delta");
+		System.out.println(bst.size());
+		System.out.println(bst.first());
 		bst.writeDot("dotTesttTestt");
+		bst.remove("alpha");
+		System.out.println(bst.size());
+		System.out.println(bst.first());
+
+		bst.writeDot("dotTesttTesttPOST");
+		assertEquals(3, bst.size());
+
+
+
 	}
 
 }
