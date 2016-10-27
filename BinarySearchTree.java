@@ -220,9 +220,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		if (root == null) {
 			throw new NoSuchElementException();
 		} else {
-			return getRightMostNode(root).data;
+			return (T) getRightMostNode(root).data;
 		}
-		// return null;
+		
 	}
 	/**
 	 * Gets left most node in Binary Search Tree
