@@ -21,26 +21,16 @@ public class BinarySearchTreeTiming {
 			static final int ITER_COUNT = 20;
 
 			public static void main(String[] args) {
-
 				long startTime = System.nanoTime();
 				while (System.nanoTime() - startTime < 1_000_000_000);
-
-				try (FileWriter fw = new FileWriter(new File("contains.tsv"))) { 
-
-					
-					for (int exp = 10; exp <= 19; exp++) {
-																											
+				try (FileWriter fw = new FileWriter(new File("contains.tsv"))) {
+					for (int exp = 10; exp <= 19; exp++) {																											
 						int size = ((int) Math.pow(2, exp)/2); 
 					//	int size = ((int) exp*2); 
-
 						BinarySearchTree<Integer> sortedTree = new BinarySearchTree<Integer>();
-						BinarySearchTree<Integer> unsortedTree = new BinarySearchTree<Integer>();						
-						
-							
+						BinarySearchTree<Integer> unsortedTree = new BinarySearchTree<Integer>();										
 						// Do the experiment multiple times, and average out the results
 						long totalTime = 0;
-						
-						
 						for (int iter = 0; iter < ITER_COUNT; iter++) {
 
 							ArrayList<Integer> sortedList = new ArrayList<Integer>();
@@ -50,27 +40,21 @@ public class BinarySearchTreeTiming {
 								unsortedList.add(i);
 								Collections.shuffle(unsortedList);
 									}
-
-							
 							sortedTree.addAll(sortedList);
 					//		sortedTree.addAll(unsortedList);
 
-							
 							// TIME IT!
 							long start = System.nanoTime();
 							
 							for (int i =10; i <=size; i+=10){
 							   sortedTree.contains(i);
 						//		unsortedTree.contains(i);
-
 							}
-
 							long stop = System.nanoTime();
 							totalTime += stop - start;
 						}
 						double averageTime = totalTime / (double) ITER_COUNT;
-						System.out.println(size + "\t" + averageTime); // print to console
-																	
+						System.out.println(size + "\t" + averageTime); // print to console										
 						fw.write(size + "\t" + averageTime + "\n"); // write to file.
 					//	test.writeDot("dotTime");
 
