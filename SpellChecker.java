@@ -1,3 +1,7 @@
+/**
+ * By Patrick Ekel and Will Stout
+ * u0736878 and U1011688
+ */
 package assignment08;
 
 import java.io.File;
@@ -10,7 +14,7 @@ import java.util.Scanner;
  * Represents a "dictionary" of strings using a binary search tree and offers
  * methods for spell-checking documents.
  * 
- * @author Patrick Ekel and Will Stout
+ * @author
  */
 public class SpellChecker {
 
@@ -52,8 +56,8 @@ public class SpellChecker {
 	 *            - the String to be added to the dictionary
 	 */
 	public void addToDictionary(String word) {
-		if (word !=null){
-		dictionary.add(word);
+		if (word != null) {
+			dictionary.add(word);
 		}
 	}
 
@@ -64,10 +68,9 @@ public class SpellChecker {
 	 *            - the String to be removed from the dictionary
 	 */
 	public void removeFromDictionary(String word) {
-		if (dictionary.isEmpty()){
-			return;
+		if (dictionary.size() != 0) {
+			dictionary.remove(word);
 		}
-		dictionary.remove(word);
 	}
 
 	/**
@@ -82,16 +85,18 @@ public class SpellChecker {
 
 		List<String> wordsToCheck = readFromFile(documentFile);
 
-		List<String> misSpelledWords= new ArrayList<String>(); //TODO ARRAYLIST RIGHT HERE
+		ArrayList<String> misspelledWords = new ArrayList();
 		
 		if (wordsToCheck != null) {
-			for ( String item : wordsToCheck) {
-				if (dictionary.contains(item)==false){
-					misSpelledWords.add(item);
+			for (int index = 0; index < wordsToCheck.size(); index++) {
+				if (dictionary.contains(wordsToCheck.get(index)) == false){
+					misspelledWords.add(wordsToCheck.get(index));
 				}
 			}
+			
 		}
-		return misSpelledWords;
+		
+		return misspelledWords;
 	}
 
 	/**
@@ -143,8 +148,19 @@ public class SpellChecker {
 			System.err.println("File " + file + " cannot be found.");
 		}
 
-	//	System.out.println("Document is " + words);
+		System.out.println("Document is " + words);
 
 		return words;
 	}
+	
+	public String readDictionaryRoot() {
+		return (String) dictionary.root.data;
+		
+	}
+
+	public int dictionarySize() {
+		return dictionary.size();
+		
+	}
+	
 }
