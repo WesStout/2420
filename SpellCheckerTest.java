@@ -1,3 +1,7 @@
+/**
+ * By Patrick Ekel and Will Stout
+ * u0736878 and U1011688
+ */
 package assignment08;
 
 import static org.junit.Assert.*;
@@ -6,55 +10,76 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import assignment08.SpellChecker;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-/**
- * This is a test class for the SpellChecker class
- * @author Patrick Ekel and Will Stout
- *
- */
 public class SpellCheckerTest {
-	SpellChecker sc;
-
-
+	SpellChecker sp = new SpellChecker();
+	File f;
+	
 	@Before
 	public void setUp() throws Exception {
+		 f = new File("good_luck.txt");
 	}
-
-	@After
-	public void tearDown() throws Exception {
+	
+	
+	
+	@Test
+	public void testAddToDictionary() {
+		sp.addToDictionary("a");
+		assertTrue(sp.readDictionaryRoot() == "a");
+		sp.addToDictionary("b");
+		sp.addToDictionary("c");
+		sp.addToDictionary("d");
+		assertTrue(sp.readDictionaryRoot() == "a");
+		sp.removeFromDictionary("b");
+		assertTrue(sp.readDictionaryRoot() == "a");
+		
 	}
+	
 
 	@Test
-	public void testSmellerChckerSpellCheckFile() {
-		ArrayList<String> shortDictionary = new ArrayList<String>();
-		shortDictionary.add("the");
-		shortDictionary.add("man");
-		shortDictionary.add("enjoys");
-		shortDictionary.add("taking");
-		shortDictionary.add("long");
-		shortDictionary.add("walks");
-		sc = new SpellChecker(shortDictionary);
-		File file = new File("C:/Utah/Fall16/2420/assignment07/shortFile.txt");
-		System.out.println(sc.spellCheck(file).toString());
-		List<String> t = new ArrayList<String>();
-		t.add("dude");
-		t.add("hates");
-		t.add("runs");
-		assertEquals(t, sc.spellCheck(file));
+	public void testAddToDictionaryFirst() {
+		sp.addToDictionary("z");
+		assertTrue(sp.readDictionaryRoot() == "z");
+		sp.addToDictionary("y");
+		sp.addToDictionary("x");
+		sp.addToDictionary("w");
+		assertTrue(sp.readDictionaryRoot() == "z");
+		sp.removeFromDictionary("m");
+		assertTrue(sp.readDictionaryRoot() == "z");
+		
 	}
+	
+	
 	@Test
-	public void testAddToDicctionary() {
-		File file = new File("C:/Utah/Fall16/2420/assignment07/un.txt");
-		sc = new SpellChecker(file);
-		List<String> empty = new ArrayList<String>();
-		List<String> single = new ArrayList<String>();
-		single.add("zebrah");
-		assertEquals(empty, sc.spellCheck(file));
-		sc.removeFromDictionary("zebrah");
-		assertEquals(single, sc.spellCheck(file));
-
+	public void testRemoveFromDictionary() {
+		sp.addToDictionary("a");
+		assertTrue(sp.readDictionaryRoot() == "a");
+		sp.addToDictionary("b");
+		sp.addToDictionary("c");
+		sp.addToDictionary("d");
+		sp.removeFromDictionary("d");
+		sp.removeFromDictionary("c");
+		sp.removeFromDictionary("e");
+		assertTrue(sp.dictionarySize() == 2);
 	}
+	
+	@Test
+	public void testSpellCheck() {
+		sp.addToDictionary("good");
+		sp.addToDictionary("luck");
+		sp.addToDictionary("on");
+		 f = new File("good_luck.txt");
+		List<String> thing = sp.spellCheck(f);
+		assertTrue(thing.size() == 0);
+		
+		
+		
+	}
+
 }
+
