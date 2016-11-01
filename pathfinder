@@ -1,0 +1,53 @@
+package assignment09;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import assignment08.BinarySearchTree.Node;
+
+
+public class PathFinder {
+
+	public class Node<T> {
+		public T data;
+		private Node left;
+		private Node right;
+
+		public Node(T data) {
+			this.data = data;
+		}
+	}
+	
+	public static void solveMaze(String inputFile, String outputFile) {
+		
+	
+		if (inputFile == null) {
+			System.out.print("Input file is null");
+
+		}
+		
+		File file = new File(inputFile);
+	    try {
+	        Scanner sc = new Scanner(file);
+	        
+	        
+	        while (sc.hasNextLine()) {
+	        	
+	            String currentLine = sc.nextLine();
+	            System.out.println(currentLine);
+	             
+	        }
+	        sc.close();
+	        
+	        
+	    } 
+	    catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public static void main(String[] args) {
+		solveMaze("classic.txt", "classic.txt");
+	}
+}
